@@ -10,11 +10,11 @@ _shuffle = (src)->
     src[j] = v
   src
 
-exports.dictionarySort =
+exports.dictionary =
 
   'empty':(test)->
     src = ['', '']
-    test.deepEqual sorter.dictionarySort(_shuffle(src)), src
+    test.deepEqual sorter.dictionary(_shuffle(src)), src
     test.done()
 
   'single-byte':
@@ -23,7 +23,7 @@ exports.dictionarySort =
       src = [
         '123', '132', '213', '231', '312', '321'
       ]
-      test.deepEqual sorter.dictionarySort(_shuffle(src)), src
+      test.deepEqual sorter.dictionary(_shuffle(src)), src
       test.done()
 
     'number': (test)->
@@ -31,7 +31,7 @@ exports.dictionarySort =
         '0', '00', '000', '001', '01', '010', '011'
         '1', '10', '100', '101', '11', '110', '111'
       ]
-      test.deepEqual sorter.dictionarySort(_shuffle(src)), src
+      test.deepEqual sorter.dictionary(_shuffle(src)), src
       test.done()
 
     'alphabet': (test)->
@@ -41,7 +41,7 @@ exports.dictionarySort =
         'AAA', 'AAa', 'AaA', 'Aaa', 'aAA', 'aAa', 'aaA', 'aaa'
         'ab', 'abc', 'b'
       ]
-      test.deepEqual sorter.dictionarySort(_shuffle(src)), src
+      test.deepEqual sorter.dictionary(_shuffle(src)), src
       test.done()
 
     'mixed': (test)->
@@ -49,7 +49,7 @@ exports.dictionarySort =
         'A10B1', 'A10B10', 'A10B2', 'A1B1', 'A1B10', 'A1B2'
         'A2B1', 'A2B10', 'A2B2'
       ]
-      test.deepEqual sorter.dictionarySort(_shuffle(src)), src
+      test.deepEqual sorter.dictionary(_shuffle(src)), src
       test.done()
 
     'filename': (test)->
@@ -57,7 +57,7 @@ exports.dictionarySort =
         '1.txt', '10.txt', '100.txt'
         '2.txt', '20.txt'
       ]
-      test.deepEqual sorter.dictionarySort(_shuffle(src)), src
+      test.deepEqual sorter.dictionary(_shuffle(src)), src
       test.done()
 
   'multibyte':
@@ -67,7 +67,7 @@ exports.dictionarySort =
         '000', '00０', '0０0', '0００'
         '０00', '０0０', '００0', '０００'
       ]
-      test.deepEqual sorter.dictionarySort(_shuffle(src)), src
+      test.deepEqual sorter.dictionary(_shuffle(src)), src
       test.done()
 
     'alphabet': (test)->
@@ -77,7 +77,7 @@ exports.dictionarySort =
         'aAＡａ', 'aAａＡ', 'aＡAａ', 'aＡａA', 'aａAＡ', 'aａＡA'
         'ａAＡa', 'ａAaＡ', 'ａＡAa', 'ａＡaA', 'ａaAＡ', 'ａaＡA'
       ]
-      test.deepEqual sorter.dictionarySort(_shuffle(src)), src
+      test.deepEqual sorter.dictionary(_shuffle(src)), src
       test.done()
 
     'japanese aiueo': (test)->
@@ -93,7 +93,7 @@ exports.dictionarySort =
         'を', 'ヲ', 'ｦ'
         'ん', 'ン', 'ﾝ'
       ]
-      test.deepEqual sorter.dictionarySort(_shuffle(src)), src
+      test.deepEqual sorter.dictionary(_shuffle(src)), src
       test.done()
 
     'japanese a': (test)->
@@ -108,7 +108,7 @@ exports.dictionarySort =
         'ｧァぁ', 'ｧァァ', 'ｧァｧ'
         'ｧｧぁ', 'ｧｧァ', 'ｧｧｧ'
       ]
-      test.deepEqual sorter.dictionarySort(_shuffle(src)), src
+      test.deepEqual sorter.dictionary(_shuffle(src)), src
       test.done()
 
     'complex': (test)->
@@ -136,7 +136,7 @@ exports.dictionarySort =
         'う22'
         'う2２'
       ]
-      test.deepEqual sorter.dictionarySort(_shuffle(src)), src
+      test.deepEqual sorter.dictionary(_shuffle(src)), src
       test.done()
 
   'web':
@@ -147,7 +147,7 @@ exports.dictionarySort =
         'ごとう'
         'こばやし'
       ]
-      test.deepEqual sorter.dictionarySort(_shuffle(src)), src
+      test.deepEqual sorter.dictionary(_shuffle(src)), src
       test.done()
 
     'http://www.softvision.co.jp/dbpro/help/guide/jishoord.htm': (test)->
@@ -163,7 +163,7 @@ exports.dictionarySort =
         'カッコー'
         'かっこく'
       ]
-      test.deepEqual sorter.dictionarySort(_shuffle(src)), src
+      test.deepEqual sorter.dictionary(_shuffle(src)), src
       test.done()
 
 

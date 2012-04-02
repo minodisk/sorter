@@ -1,67 +1,150 @@
 R_NUM_SPLITTER = /([0-9 \uff10-\uff19\u3000]+)|([^0-9 \uff10-\uff19\u3000]+)/g
 R_MULTIBYTE_NUM = /[\uff10-\uff19]/g
-DICTIONARY =
-  'A': [
-    'Ａ-Ｚ'
-    'a-z'
-    'ａ-ｚ'
-  ]
-  '0': [
-    '０-９'
-  ]
-  'あ': [
-    'ぁぃぅぇぉ            っ                 ゃ ゅ ょ     ゎ'
-    'ァィゥェォヵ  ヶ        ッ                 ャ ュ ョ     ヮ'
-    'ｧｨｩｪｫ            ｯ                 ｬ ｭ ｮ'
-    'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもや ゆ よらりるれろわゐ ゑをん'
-    'アイウエオカキクケコサシスセソタチツデトナニヌネノハヒフヘホマミムメモヤ ユ ヨラリルレロワヰ ヱヲン'
-    'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔ ﾕ ﾖﾗﾘﾙﾚﾛﾜ   ｦﾝ'
-    '  ゔ  がぎぐげござじずぜぞだぢづでど     ばびぶべぼ'
-    '  ヴ  ガギグゲゴザジズゼゾダヂヅデド     バビブベボ'
-    '                         ぱぴぷぺぽ'
-    '                         パピプペポ'
-  ]
+DICTIONARY_DATA =
+  en:
+    encode:
+      'A': [
+        'ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ'
+        'abcdefghijklmnopqrstuvwxyz'
+        'ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ'
+      ]
+      '0': [
+        '０１２３４５６７８９'
+      ]
+  ja:
+    encode:
+      'あ': [
+        'ぁぃぅぇぉ            っ                 ゃ ゅ ょ     ゎ'
+        'ァィゥェォヵ  ヶ        ッ                 ャ ュ ョ     ヮ'
+        'ｧｨｩｪｫ            ｯ                 ｬ ｭ ｮ'
+        'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもや ゆ よらりるれろわゐ ゑをん'
+        'アイウエオカキクケコサシスセソタチツデトナニヌネノハヒフヘホマミムメモヤ ユ ヨラリルレロワヰ ヱヲン'
+        'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔ ﾕ ﾖﾗﾘﾙﾚﾛﾜ   ｦﾝ'
+        '  ゔ  がぎぐげござじずぜぞだぢづでど     ばびぶべぼ'
+        '  ヴ  ガギグゲゴザジズゼゾダヂヅデド     バビブベボ'
+        '                         ぱぴぷぺぽ'
+        '                         パピプペポ'
+      ]
+    long  :
+      'ー':
+        'ぁぃぅぇぉ': [
+          '  っ'
+          'ゃ ゅ ょ'
+          'ゎ'
+        ]
+        'ァィゥェォ': [
+          'ヵ  ヶ'
+          '  ッ'
+          'ャ ュ ョ'
+          'ヮ'
+        ]
+        'ｧｨｩｪｫ': [
+          '  ｯ'
+          'ｬ ｭ ｮ'
+        ]
+        'あいうえお': [
+          'かきくけこ'
+          'さしすせそ'
+          'たちつてと'
+          'なにぬねの'
+          'はひふへほ'
+          'まみむめも'
+          'や ゆ よ'
+          'らりるれろ'
+          'わゐ ゑを'
+          '  ゔ'
+          'がぎぐげご'
+          'ざじずぜぞ'
+          'だぢづでど'
+          'ばびぶべぼ'
+          'ぱぴぷぺぽ'
+        ]
+        'アイウエオ': [
+          'カキクケコ'
+          'サシスセソ'
+          'タチツデト'
+          'ナニヌネノ'
+          'ハヒフヘホ'
+          'マミムメモ'
+          'ヤ ユ ヨ'
+          'ラリルレロ'
+          'ワヰ ヱヲ'
+          '  ヴ'
+          'ガギグゲゴ'
+          'ザジズゼゾ'
+          'ダヂヅデド'
+          'バビブベボ'
+          'パピプペポ'
+        ]
+        'ｱｲｳｴｵ': [
+          'ｶｷｸｹｺ'
+          'ｻｼｽｾｿ'
+          'ﾀﾁﾂﾃﾄ'
+          'ﾅﾆﾇﾈﾉ'
+          'ﾊﾋﾌﾍﾎ'
+          'ﾏﾐﾑﾒﾓ'
+          'ﾔ ﾕ ﾖ'
+          'ﾗﾘﾙﾚﾛ'
+          'ﾜ   ｦ'
+        ]
 
-sequence = []
-jaVowel = []
+dictionary =
+  encode: []
+  long  : {}
 
 do ->
-  for trgChar, srcTexts of DICTIONARY
-    trgCode = trgChar.charCodeAt 0
-    delta = Math.pow 0.1, String(srcTexts.length).length + 1
-    for srcText, i in srcTexts
-      baseCode = trgCode + delta * (i + 1)
-      data =
-        targetChar: trgChar,
-        targetCode: trgCode,
-        src       : srcText,
-        codeMap   : {}
-      if srcText.length is 3 and srcText.indexOf('-') is 1
-        data.min = srcText.charCodeAt 0
-        data.max = srcText.charCodeAt 2
-        for j in [0..data.max - data.min] by 1
-          data.codeMap[data.min + j] = baseCode + j
-      else
+  for language, dictionaryData of DICTIONARY_DATA
+    # encode
+    for trgChar, srcTexts of dictionaryData.encode
+      trgCode = trgChar.charCodeAt 0
+      delta = Math.pow 0.1, String(srcTexts.length).length + 1
+      for srcText, i in srcTexts
+        baseCode = trgCode + delta * (i + 1)
+        data =
+          trgChar: trgChar
+          trgCode: trgCode
+          src    : srcText
+          codeMap: {}
         data.min = Number.MAX_VALUE
         data.max = Number.MIN_VALUE
         j = srcText.length
         while j--
           code = srcText.charCodeAt j
-          if code isnt 32 and code isnt 12288
+          if code isnt 32
             data.codeMap[code] = baseCode + j
             if code < data.min
               data.min = code
             if code > data.max
               data.max = code
-      sequence.push data
-      if trgChar is 'あ'
-        jaVowel.push data
+        dictionary.encode.push data
 
-console.log sequence[sequence.length - 1]
-console.log '-------------'
-console.log jaVowel[jaVowel.length - 1]
+    # long
+    for longChar, data of dictionaryData.long
+      map = {}
+      for trgText, srcTexts of data
+        trgCodes = []
+        for trgChar, i in trgText
+          trgCodes[i] = trgText.charCodeAt i
+        for srcText in srcTexts
+          for srcChar, i in srcText
+            srcCode = srcText.charCodeAt i
+            if srcCode isnt 32
+              map[srcCode] = trgCodes[i]
+      dictionary.long[longChar.charCodeAt 0] = map
 
-dictionaryCompare = (a, b)->
+console.log dictionary
+
+exports = {}
+
+exports.dictionary = (src, key = null)->
+  src.sort (a, b)->
+    if key
+      a = a[key]
+      b = b[key]
+    compareAsDictionary a, b
+  src
+
+compareAsDictionary = (a, b)->
   delta = 0
   for i in [0...Math.min(a.length, b.length)] by 1
     d = toDictionaryCode(a, i) - toDictionaryCode(b, i)
@@ -77,21 +160,16 @@ dictionaryCompare = (a, b)->
 
 toDictionaryCode = (text, index)->
   code = text.charCodeAt index
-  if (code is 12540 or code is 12509) and index isnt 0
-    while index--
-      code = text.charCodeAt index
-      if code isnt 12540 and code isnt 12509
-        break
-    i = jaVowel.length
-    while i--
-      map = jaVowel[i]
-      if code >= map.min and code <= map.max and map.codeMap[code]
-        code = map.src.charCodeAt(map.src.indexOf(text.charAt index) % 5)
-        break
 
-  i = sequence.length
+  # If current char is long, displace to corresponded char of previous char.
+  if index > 0 and (map = dictionary.long[code])?
+    prevCode = text.charCodeAt index - 1
+    if (currCode = map[prevCode])?
+      code = currCode
+
+  i = dictionary.encode.length
   while i--
-    map = sequence[i]
+    map = dictionary.encode[i]
     if code >= map.min and code <= map.max and map.codeMap[code]
       return map.codeMap[code]
   code
@@ -137,16 +215,16 @@ naturalCompare = (a, b)->
           delta = (d < 0) ? -0.1: 0.1
       else if delta is 0
         #console.log('                      Number, but dictionary -->')
-        delta = dictionaryCompare(a[i].str, b[i].str)
+        delta = compareAsDictionary(a[i].str, b[i].str)
       #console.log('                      Number -->')
     else if typeof a[i].num isnt 'undefined'
       #console.log('                      decide as String!!')
-      return dictionaryCompare(a[i].str, b[i].str)
+      return compareAsDictionary(a[i].str, b[i].str)
     else if typeof b[i].num isnt 'undefined'
       #console.log('                      decide as String!!')
-      return dictionaryCompare(a[i].str, b[i].str)
+      return compareAsDictionary(a[i].str, b[i].str)
     else
-      d = dictionaryCompare(a[i].str, b[i].str)
+      d = compareAsDictionary(a[i].str, b[i].str)
       if d < -0.1 or d > 0.1
         #console.log('                      decide as dictionary')
         return d
@@ -160,16 +238,6 @@ naturalCompare = (a, b)->
   else
     #console.log('                      decide as byte difference', delta)
     delta
-
-exports = {}
-
-exports.dictionarySort = (src, key = null)->
-  src.sort (a, b)->
-    if key
-      a = a[key]
-      b = b[key]
-    return dictionaryCompare(a, b)
-  return src
 
 exports.naturalSort = (src, key = null)->
   tmps = []
@@ -187,9 +255,7 @@ exports.naturalSort = (src, key = null)->
   dst
 
 #if BROWSER
-if module?
-  module.exports = exports
-else if define?
+if define?
   define -> exports
 else if window?
   unless window.mn? then window.mn = {}
