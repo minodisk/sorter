@@ -1,0 +1,13 @@
+{
+  "name"       :"sorter",
+  "version"    :"0.0.0",
+  "description":"Dictionary and natural sort module.",
+  "tags"       :["dictionary natural sort array"],
+  "author"     :"Daisuke MINO <daisuke.mino@gmail.com>",
+  "license"    :"MIT",
+  "main"       :"./lib/node/sorter",
+  "repository" :{
+    "type":"git",
+    "url" :"https://minodisk@github.com/minodisk/sorter-js.git"
+  }
+}
