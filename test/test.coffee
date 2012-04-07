@@ -166,7 +166,7 @@ exports.dictionary =
       test.deepEqual sorter.dictionary(_shuffle(src)), src
       test.done()
 
-
+###
 exports.naturalSort =
 
   'empty':(test)->
@@ -197,7 +197,6 @@ exports.naturalSort =
     test.deepEqual sorter.naturalSort(['x_2', 'x__1']), ['x__1', 'x_2']
     test.done()
 
-###
   'three groups':(test)->
     _testNaturalSort test
       , ['hello 2 world', 'hello world', 'hello world 2']

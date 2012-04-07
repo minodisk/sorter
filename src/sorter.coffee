@@ -3,17 +3,17 @@ R_MULTIBYTE_NUM = /[\uff10-\uff19]/g
 DICTIONARY_DATA =
   en:
     encode:
-      'A': [
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZ': [
         'ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ'
         'abcdefghijklmnopqrstuvwxyz'
         'ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ'
       ]
-      '0': [
+      '01234567890': [
         '０１２３４５６７８９'
       ]
   ja:
     encode:
-      'あ': [
+      'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもや ゆ よらりるれろわゐ ゑをん': [
         'ぁぃぅぇぉ            っ                 ゃ ゅ ょ     ゎ'
         'ァィゥェォヵ  ヶ        ッ                 ャ ュ ョ     ヮ'
         'ｧｨｩｪｫ            ｯ                 ｬ ｭ ｮ'
@@ -94,31 +94,29 @@ dictionary =
 
 do ->
   for language, dictionaryData of DICTIONARY_DATA
-    # encode
-    for trgChar, srcTexts of dictionaryData.encode
-      trgCode = trgChar.charCodeAt 0
-      delta = Math.pow 0.1, String(srcTexts.length).length + 1
+    # Setup encode data.
+    for trgText, srcTexts of dictionaryData.encode
+      trgCodes = []
+      for trgChar, i in trgText
+        trgCodes[i] = trgText.charCodeAt i
+      deltaPerRow = Math.pow 0.1, String(srcTexts.length).length + 1
       for srcText, i in srcTexts
-        baseCode = trgCode + delta * (i + 1)
+        delta = deltaPerRow * (i + 1)
         data =
-          trgChar: trgChar
-          trgCode: trgCode
-          src    : srcText
-          codeMap: {}
-        data.min = Number.MAX_VALUE
-        data.max = Number.MIN_VALUE
-        j = srcText.length
-        while j--
+          min: Infinity
+          max: -Infinity
+          map: {}
+        for srcChar, j in srcText
           code = srcText.charCodeAt j
           if code isnt 32
-            data.codeMap[code] = baseCode + j
-            if code < data.min
-              data.min = code
-            if code > data.max
-              data.max = code
+            data.map[code] = trgCodes[j] + delta
+          if code < data.min
+            data.min = code
+          if code > data.max
+            data.max = code
         dictionary.encode.push data
 
-    # long
+    # Setup long data.
     for longChar, data of dictionaryData.long
       map = {}
       for trgText, srcTexts of data
@@ -132,7 +130,7 @@ do ->
               map[srcCode] = trgCodes[i]
       dictionary.long[longChar.charCodeAt 0] = map
 
-console.log dictionary
+#console.log dictionary
 
 exports = {}
 
@@ -152,8 +150,7 @@ compareAsDictionary = (a, b)->
       return d
     if delta is 0
       delta = d
-  d = a.length - b.length
-  if d isnt 0
+  if (d = a.length - b.length) isnt 0
     d
   else
     delta
@@ -170,9 +167,24 @@ toDictionaryCode = (text, index)->
   i = dictionary.encode.length
   while i--
     map = dictionary.encode[i]
-    if code >= map.min and code <= map.max and map.codeMap[code]
-      return map.codeMap[code]
+    if code >= map.min and code <= map.max and map.map[code]?
+      return map.map[code]
   code
+
+exports.naturalSort = (src, key = null)->
+  tmps = []
+  console.log src
+  for v, i in src
+    v = if key then v[key] else v
+    tmps[i] =
+      raw   : v
+      chunks: naturalParse v
+  tmps.sort(naturalCompare)
+  dst = []
+  i = tmps.length
+  while i--
+    dst[i] = tmps[i].raw
+  dst
 
 naturalParse = (text)->
   chunks = []
@@ -238,21 +250,6 @@ naturalCompare = (a, b)->
   else
     #console.log('                      decide as byte difference', delta)
     delta
-
-exports.naturalSort = (src, key = null)->
-  tmps = []
-  console.log src
-  for v, i in src
-    v = if key then v[key] else v
-    tmps[i] =
-      raw   : v
-      chunks: naturalParse v
-  tmps.sort(naturalCompare)
-  dst = []
-  i = tmps.length
-  while i--
-    dst[i] = tmps[i].raw
-  dst
 
 #if BROWSER
 if define?
