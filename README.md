@@ -1,12 +1,13 @@
-# SorterJS
+# Sorter
 
 Dictionary and natural sort module for Node.js, RequireJS and browser.
+Supports 2 bytes character in English and Japanese.
 
-## Installation
-
-### Node.js
+## Installation at Node.js
 
     $ npm install sorter
+
+## Adding to browser
 
 ### RequireJS
 
@@ -28,5 +29,5 @@ Dictionary and natural sort module for Node.js, RequireJS and browser.
 
 ## API Documentation
 
-* **dictionarySort(array, key = null)** -
-* **naturalSort(array, key = null)** -
+* **dictSort(array, key = null)** -
+* **natSort(array, key = null)** -

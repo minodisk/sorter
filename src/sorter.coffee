@@ -1,3 +1,7 @@
+#if BROWSER
+exports = {}
+#endif
+
 R_NUM_SPLITTER = /([0-9 \uff10-\uff19\u3000]+)|([^0-9 \uff10-\uff19\u3000]+)/g
 R_MULTIBYTE_NUM = /[\uff10-\uff19]/g
 DICTIONARY_DATA =
@@ -10,6 +14,11 @@ DICTIONARY_DATA =
       ]
       '01234567890': [
         '０１２３４５６７８９'
+      ]
+  ru:
+    encode:
+      'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ': [
+        'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
       ]
   ja:
     encode:
@@ -130,22 +139,18 @@ do ->
               map[srcCode] = trgCodes[i]
       dictionary.long[longChar.charCodeAt 0] = map
 
-#console.log dictionary
-
-exports = {}
-
-exports.dictionary = (src, key = null)->
+exports.dictSort = (src, key = null)->
   src.sort (a, b)->
     if key
       a = a[key]
       b = b[key]
-    compareAsDictionary a, b
+    dictCompare a, b
   src
 
-compareAsDictionary = (a, b)->
+dictCompare = (a, b)->
   delta = 0
   for i in [0...Math.min(a.length, b.length)] by 1
-    d = toDictionaryCode(a, i) - toDictionaryCode(b, i)
+    d = toDictCode(a, i) - toDictCode(b, i)
     if d < -0.1 or d > 0.1
       return d
     if delta is 0
@@ -155,7 +160,7 @@ compareAsDictionary = (a, b)->
   else
     delta
 
-toDictionaryCode = (text, index)->
+toDictCode = (text, index)->
   code = text.charCodeAt index
 
   # If current char is long, displace to corresponded char of previous char.
@@ -171,22 +176,22 @@ toDictionaryCode = (text, index)->
       return map.map[code]
   code
 
-exports.naturalSort = (src, key = null)->
+exports.natSort = (src, key = null)->
   tmps = []
   console.log src
   for v, i in src
     v = if key then v[key] else v
     tmps[i] =
       raw   : v
-      chunks: naturalParse v
-  tmps.sort(naturalCompare)
+      chunks: natParse v
+  tmps.sort(natCompare)
   dst = []
   i = tmps.length
   while i--
     dst[i] = tmps[i].raw
   dst
 
-naturalParse = (text)->
+natParse = (text)->
   chunks = []
   text.replace R_NUM_SPLITTER, (matched, num, str)->
     chunk = {}
@@ -199,7 +204,7 @@ naturalParse = (text)->
   #console.log(text, '->', JSON.stringify(chunks))
   chunks
 
-naturalCompare = (a, b)->
+natCompare = (a, b)->
   #  if (typeof a.num isnt 'undefined' and typeof b.num isnt 'undefined') {
   #    if ((d = a.num - b.num) isnt 0) {
   #      return d
@@ -227,16 +232,16 @@ naturalCompare = (a, b)->
           delta = (d < 0) ? -0.1: 0.1
       else if delta is 0
         #console.log('                      Number, but dictionary -->')
-        delta = compareAsDictionary(a[i].str, b[i].str)
+        delta = dictCompare(a[i].str, b[i].str)
       #console.log('                      Number -->')
     else if typeof a[i].num isnt 'undefined'
       #console.log('                      decide as String!!')
-      return compareAsDictionary(a[i].str, b[i].str)
+      return dictCompare(a[i].str, b[i].str)
     else if typeof b[i].num isnt 'undefined'
       #console.log('                      decide as String!!')
-      return compareAsDictionary(a[i].str, b[i].str)
+      return dictCompare(a[i].str, b[i].str)
     else
-      d = compareAsDictionary(a[i].str, b[i].str)
+      d = dictCompare(a[i].str, b[i].str)
       if d < -0.1 or d > 0.1
         #console.log('                      decide as dictionary')
         return d
@@ -258,6 +263,4 @@ else if window?
   unless window.mn? then window.mn = {}
   unless window.mn.dsk? then window.mn.dsk = {}
   unless window.mn.dsk.sorter? then window.mn.dsk.sorter = exports
-#else
-module.exports = exports
 #endif
