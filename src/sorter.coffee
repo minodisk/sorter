@@ -178,12 +178,22 @@ toDictCode = (text, index)->
 
 exports.natSort = (src, key = null)->
   tmps = []
-  console.log src
   for v, i in src
     v = if key then v[key] else v
+
+    chunks = []
+    v.replace R_NUM_SPLITTER, (matched, num, str)->
+      chunk = {}
+      if num
+        num = num.replace R_MULTIBYTE_NUM, (matched)->
+          '０１２３４５６７８９'.indexOf matched
+        chunk.num = Number num
+      chunk.str = matched
+      chunks.push chunk
+
     tmps[i] =
       raw   : v
-      chunks: natParse v
+      chunks: chunks
   tmps.sort(natCompare)
   dst = []
   i = tmps.length
@@ -191,32 +201,7 @@ exports.natSort = (src, key = null)->
     dst[i] = tmps[i].raw
   dst
 
-natParse = (text)->
-  chunks = []
-  text.replace R_NUM_SPLITTER, (matched, num, str)->
-    chunk = {}
-    if num
-      chunk.num = Number(num.replace R_MULTIBYTE_NUM, (matched)->
-        '０１２３４５６７８９'.indexOf(matched)
-      )
-    chunk.str = matched
-    chunks.push(chunk)
-  #console.log(text, '->', JSON.stringify(chunks))
-  chunks
-
 natCompare = (a, b)->
-  #  if (typeof a.num isnt 'undefined' and typeof b.num isnt 'undefined') {
-  #    if ((d = a.num - b.num) isnt 0) {
-  #      return d
-  #    } else if ((d = a.raw.length - b.raw.length) isnt 0) {
-  #      return d
-  #    }
-  #    return dictionaryCompare(a.raw, b.raw)
-  #  } else if (typeof a.num isnt 'undefined') {
-  #    return -1
-  #  } else if (typeof b.num isnt 'undefined') {
-  #    return 1
-  #  }
   a = a.chunks
   b = b.chunks
 
