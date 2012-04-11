@@ -1,6 +1,6 @@
 {
   "name"       :"sorter",
-  "version"    :"0.0.1",
+  "version"    :"0.0.2",
   "description":"Dictionary and natural sort module.",
   "tags"       :["dictionary natural sort array"],
   "author"     :{
