@@ -70,3 +70,18 @@ sorter.natSort()
     image_005.jpg
     image_12.jpg
     image_21.jpg
+
+## Support multibyte character sets
+
+### Japanese
+
+    かっこ
+    かつご
+    がっこ
+    かっこう
+    かつごう
+    がっこう
+    かっこうあざみ
+    がっこうちゅう
+    カッコー
+    かっこく
