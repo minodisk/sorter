@@ -6,7 +6,15 @@ Dictionary and natural sort module for Node.js, RequireJS and browser.
 
     $ npm install sorter
 
-## Adding to browser source
+## Adding to browser
+
+### browser
+
+    <script type="text/javascript" src="sorter.js"></script>
+    <script>
+      var dictionarySort = window.mn.dsk.sorter.dictionarySort;
+      var naturalSort = window.mn.dsk.sorter.naturalSort;
+    </script>
 
 ### RequireJS
 
@@ -16,14 +24,6 @@ Dictionary and natural sort module for Node.js, RequireJS and browser.
         var dictionarySort = sorter.dictionarySort;
         var naturalSort = sorter.naturalSort;
       });
-    </script>
-
-### browser
-
-    <script type="text/javascript" src="sorter.js"></script>
-    <script>
-      var dictionarySort = window.mn.dsk.sorter.dictionarySort;
-      var naturalSort = window.mn.dsk.sorter.naturalSort;
     </script>
 
 ## API Documentation
