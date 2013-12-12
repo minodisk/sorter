@@ -28,8 +28,8 @@ Dictionary and natural sort module for Node.js, RequireJS and browser.
 
 ## API Documentation
 
-* **dictSort(array\[, key\])** - Returns natural ordered array.
-* **natSort(array\[, key\])** - Returns dictionary ordered array.
+* **dictSort(array\[, key\])** - Returns dictionary ordered array.
+* **natSort(array\[, key\])** - Returns natural ordered array.
 
 ## Dictionary Sort
 
